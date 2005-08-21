@@ -1,0 +1,23 @@
+Revision history for Perl extension JSAN::Client
+
+0.06 Sun Aug 21 2005
+	- Completed first working version of JSAN::Client
+	- JSAN::Client->new( prefix => $path )->install_library('Display.Swap') works! :)
+
+0.05 Sat Aug 20 2005
+	- Added a ton of utlity methods
+	- Integrated Algorithm::Dependency
+	- Completed dist/release/library dependency functionality
+
+0.04 Fri Aug 19 2005
+	- Completed the bulk of JSAN::Index, except for extracting from Zip files
+	- Made JSAN::Transport create a database handle that is sane with Class::DBI
+	- Completed some basic ->extract_... methods
+	- Completed main unit testing for JSAN::Index
+
+0.03  missing
+
+0.02  missing
+
+0.01  Thu Dec 06 16:50:23 2002
+	- original version

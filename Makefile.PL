@@ -1,0 +1,24 @@
+use inc::Module::Install;
+
+name           ( 'JSAN-Client'                      );
+abstract       ( 'The JavaScript Archive Network Client Libraries');
+author         ( 'Adam Kennedy <cpan@ali.as>'       );
+version_from   ( 'lib/JSAN/Client.pm'               );
+license        ( 'perl'                             );
+requires       ( 'perl'                  => '5.005' );
+requires       ( 'File::Spec'            => '0.80'  );
+requires       ( 'File::Path'            => '1.06'  );
+requires       ( 'File::HomeDir'         => '0.06'  );
+requires       ( 'HTML::Location'        => '0.07'  );
+requires       ( 'LWP::Simple'           => '1.41'  );
+requires       ( 'Class::DBI'            => '0.96'  );
+requires       ( 'Archive::Tar'          => 0       );
+requires       ( 'Archive::Zip'          => 0       );
+requires       ( 'YAML'                  => '0.39'  );
+requires       ( 'Algorithm::Dependency' => '1.02'  );
+build_requires ( 'Test::More'            => '0.47'  );
+build_requires ( 'File::Remove'          => '0.22'  );
+include        ( 'File::Remove'                     );
+auto_install();
+
+&WriteAll;

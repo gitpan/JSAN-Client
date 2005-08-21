@@ -1,0 +1,25 @@
+name: JSAN-Client
+version: 0.06
+abstract: The JavaScript Archive Network Client Libraries
+author: Adam Kennedy <cpan@ali.as>
+license: perl
+distribution_type: module
+build_requires:
+  Test::More: 0.47
+  File::Remove: 0.22
+requires:
+  perl: 5.005
+  File::Spec: 0.80
+  File::Path: 1.06
+  File::HomeDir: 0.06
+  HTML::Location: 0.07
+  LWP::Simple: 1.41
+  Class::DBI: 0.96
+  Archive::Tar: 0
+  Archive::Zip: 0
+  YAML: 0.39
+  Algorithm::Dependency: 1.02
+no_index:
+  directory:
+    - inc
+generated_by: Module::Install version 0.37
