@@ -37,7 +37,7 @@ use strict;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 }
 
 
@@ -91,7 +91,7 @@ use base 'Class::DBI';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 }
 
 my $dbh;
@@ -150,7 +150,7 @@ Returns a list of L<\JSAN::Index::Release> objects.
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 	@ISA     = 'JSAN::Index::CDBI';
 }
 
@@ -196,7 +196,7 @@ contained in (according to the indexer).
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 	@ISA     = 'JSAN::Index::CDBI';
 }
 
@@ -303,7 +303,7 @@ for this library on the L<http://openjsan.org/> website.
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 	@ISA     = 'JSAN::Index::Extractable';
 }
 
@@ -375,7 +375,7 @@ Returns a list of L<\JSAN::Index::Release> objects.
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 	@ISA     = 'JSAN::Index::Extractable';
 }
 
@@ -487,7 +487,7 @@ use constant COMPRESSED => 1;
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 	@ISA     = 'JSAN::Index::Extractable';
 }
 
@@ -788,7 +788,7 @@ sub _write {
 	my ($self, $dir, $file, $content) = @_;
 
 	# Localise newlines in the files
-	$content =~ s/(\015{1,2}\012|\015|\012)/<br>\n/g;
+	$content =~ s/(\015{1,2}\012|\015|\012)/\n/g;
 
 	# Create the save directory if needed
 	File::Path::mkpath( $dir, 0, 0755 ) unless -d $dir;
@@ -818,7 +818,7 @@ use base 'Algorithm::Dependency::Ordered';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 }
 
 sub new {
@@ -878,7 +878,7 @@ use base 'Algorithm::Dependency::Source';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 }
 
 sub new {

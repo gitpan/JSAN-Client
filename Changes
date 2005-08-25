@@ -1,5 +1,9 @@
 Revision history for Perl extension JSAN::Client
 
+0.07 Thu Aug 25 2005
+	- Fixing bug in newline localisation which was accidentally adding <br> tags
+	- Catch the use of odd params and die appropriately
+
 0.06 Sun Aug 21 2005
 	- Completed first working version of JSAN::Client
 	- JSAN::Client->new( prefix => $path )->install_library('Display.Swap') works! :)

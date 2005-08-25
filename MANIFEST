@@ -26,3 +26,4 @@ t/04_index.t
 t/05_extract.t
 t/06_dependency.t
 t/07_client.t
+t/99_pod.t

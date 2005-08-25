@@ -44,7 +44,7 @@ use LWP::Simple           ();
 use DBI                   ();
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 
 	# prefork support (for preloading environments)
 	eval "use prefork 'Class::DBI';";

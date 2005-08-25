@@ -15,7 +15,7 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 15;
+use Test::More tests => 16;
 
 use File::Remove ();
 use JSAN::Client;
@@ -47,6 +47,17 @@ my $Client = JSAN::Client->new(
 isa_ok( $Client, 'JSAN::Client' );
 is( $Client->prefix, $testdir, '->prefix returns the expected path'  );
 is( $Client->verbose, '',      '->verbose returns false as expected' );
+
+
+
+
+#####################################################################
+# Bad Params to JSAN::Client
+
+eval {
+	JSAN::Client->new( 'lib' );
+};
+like( $@, qr/Odd number of params/, '->new with one param dies correctly' );
 
 
 

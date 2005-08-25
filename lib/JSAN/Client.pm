@@ -41,7 +41,7 @@ use JSAN::Index;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.06';
+	$VERSION = '0.07';
 }
 
 
@@ -89,6 +89,9 @@ Returns a new C<JSAN::Client> object, or dies on error.
 
 sub new {
 	my $class  = ref $_[0] ? ref shift : shift;
+	if ( scalar(@_) % 2 ) {
+		Carp::croak("Odd number of params passed to JSAN::Client::new");
+	}
 	my %params = @_;
 
 	# Create the basic object
@@ -98,7 +101,12 @@ sub new {
 		}, $class;
 
 	# Check the prefix
-	### FIXME - Add this
+	unless ( $self->prefix ) {
+		Carp::croak("No prefix provided to JSAN::Client::new");
+	}
+	unless ( -d $self->prefix and -w $self->prefix ) {
+		Carp::croak("Prefix provided to JSAN::Client::new is not a writable directory");
+	}
 
 	$self;			
 }
