@@ -1,5 +1,9 @@
 Revision history for Perl extension JSAN::Client
 
+0.08 Thu Aug 25 2005
+	- Added support for build-time dependency traversal instead of install-time traversal
+	- Reoranised the way we specify the install type to make things more flexible
+
 0.07 Thu Aug 25 2005
 	- Fixing bug in newline localisation which was accidentally adding <br> tags
 	- Catch the use of odd params and die appropriately

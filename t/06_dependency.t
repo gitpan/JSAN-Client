@@ -28,14 +28,14 @@ use JSAN::Index;
 # Main tests
 
 # Can we load the release source?
-foreach my $params ( [], [ 'install' ] ) {
+foreach my $params ( [], [ build => 1 ] ) {
 	my $Source = JSAN::Index::Release::_Source->new( @$params );
 	isa_ok( $Source, 'JSAN::Index::Release::_Source' );
 	ok( $Source->load, 'JSAN::Index::Release::_Source loads ok' );
 }
 
 # Get an installation Alg:Dep object
-my $Install = JSAN::Index->install_dependency;
+my $Install = JSAN::Index->dependency;
 isa_ok( $Install, 'Algorithm::Dependency' );
 isa_ok( $Install, 'JSAN::Index::Release::_Dependency' );
 

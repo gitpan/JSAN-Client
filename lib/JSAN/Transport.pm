@@ -42,9 +42,10 @@ use File::Basename        ();
 use HTML::Location        ();
 use LWP::Simple           ();
 use DBI                   ();
+
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 
 	# prefork support (for preloading environments)
 	eval "use prefork 'Class::DBI';";

@@ -41,7 +41,7 @@ use JSAN::Index;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 }
 
 
@@ -97,6 +97,7 @@ sub new {
 	# Create the basic object
 	my $self = bless {
 		prefix  =>    $params{prefix},
+		build   => !! $params{build},
 		verbose => !! $params{verbose},
 		}, $class;
 
@@ -132,6 +133,18 @@ client is running in verbose mode.
 
 sub verbose { $_[0]->{verbose} }
 
+=pod
+
+=head2 build
+
+The C<build> accessor returns the boolean flag indicating whether the
+client is running in build-time mode.
+
+=cut
+
+sub build { $_[0]->{build} }
+
+
 
 
 
@@ -158,7 +171,7 @@ up to date and did not need to be installed, or dies on error.
 =cut
 
 sub install_library {
-	my $self    = shift;
+	my $self   = shift;
 
 	# Does the library exist?
 	my $library = JSAN::Index::Library->retrieve( name => $_[0] )
@@ -198,10 +211,10 @@ sub install_distribution {
 
 # Takes a JSAN::Index::Release object, and installs it
 sub _install_release {
-	my ($self, $requested, $name) = @_;
+	my ($self, $requested, $name ) = @_;
 
 	# Find the full schedule
-	my $dependency = JSAN::Index->install_dependency;
+	my $dependency = JSAN::Index->dependency( build => $self->build );
 	my $schedule   = $dependency->schedule( $requested )
 		or Carp::croak("Error while finding dependencies for '$name'");
 	my @releases = map {
@@ -209,7 +222,8 @@ sub _install_release {
 			or Carp::croak("Failed to get an object for '$_'")
 		} @$schedule;
 
-	# Following debian's lead, download all the releases first
+	# Following debian's lead, download all the releases first.
+	# That way if there's a download error we won't be left half-installed.
 	foreach my $release ( @releases ) {
 		$release->mirror;
 	}

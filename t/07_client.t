@@ -29,7 +29,7 @@ END {
 	File::Remove::remove \1, $testdir if -e $testdir;
 }
 
-my @libs = map { catfile(@$_) } (
+my @requires = map { catfile(@$_) } (
 	[ 'Display.js'           ],
 	[ 'Display',   'Swap.js' ],
 	[ 'JSAN.js'              ],
@@ -68,7 +68,7 @@ like( $@, qr/Odd number of params/, '->new with one param dies correctly' );
 
 is( $Client->install_library('Display.Swap'), 1,
 	'->install_library for known-good library returns true' );
-foreach my $file ( @libs ) {
+foreach my $file ( @requires ) {
 	my $path = catfile( $testdir, $file );
 	ok( -f $path, "Library file '$file' was installed where expected" );
 }
@@ -88,7 +88,7 @@ ok( mkdir($testdir), "Create test directory '$testdir'" );
 # Install matching distribution
 is( $Client->install_distribution('Display.Swap'), 1,
 	'->install_disribution for known-good distribution returns true' );
-foreach my $file ( @libs ) {
+foreach my $file ( @requires ) {
 	my $path = catfile( $testdir, $file );
 	ok( -f $path, "Library file '$file' was installed where expected" );
 }

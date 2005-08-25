@@ -37,7 +37,7 @@ use strict;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 }
 
 
@@ -49,17 +49,21 @@ BEGIN {
 
 =pod
 
-=head2 install_dependency
+=head2 dependency param => $value
 
-The C<install_dependency> method creates and returns a release-level
-dependency object that is used by L<JSAN::Client> to schedule which
-releases to install.
+The C<dependency> method creates and returns an dependency resolution 
+object that is used by L<JSAN::Client> to schedule which releases to
+install.
+
+If the optional parameter 'build' is true, creates a build-time
+dependency resolve, which will additionally install releases only needed
+for testing.
 
 Returns an L<Algorithm::Dependency> object.
 
 =cut
 
-sub install_dependency {
+sub dependency {
 	my $class  = shift;
 	my %params = @_;
 	$params{type} = 'install';
@@ -91,7 +95,7 @@ use base 'Class::DBI';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 }
 
 my $dbh;
@@ -150,7 +154,7 @@ Returns a list of L<\JSAN::Index::Release> objects.
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 	@ISA     = 'JSAN::Index::CDBI';
 }
 
@@ -196,7 +200,7 @@ contained in (according to the indexer).
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 	@ISA     = 'JSAN::Index::CDBI';
 }
 
@@ -303,7 +307,7 @@ for this library on the L<http://openjsan.org/> website.
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 	@ISA     = 'JSAN::Index::Extractable';
 }
 
@@ -375,7 +379,7 @@ Returns a list of L<\JSAN::Index::Release> objects.
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 	@ISA     = 'JSAN::Index::Extractable';
 }
 
@@ -487,7 +491,7 @@ use constant COMPRESSED => 1;
 
 use vars qw{$VERSION @ISA};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 	@ISA     = 'JSAN::Index::Extractable';
 }
 
@@ -558,7 +562,56 @@ sub requires {
 		return \%hash;
 	}
 
-	Carp::croak("Unknown dependency structure in META.yml for "
+	Carp::croak("Unknown 'requires' dependency structure in META.yml for "
+		. $self->source);
+}
+
+=pod
+
+=head2 build_requires
+
+The C<build_requires> method finds the set of build-time library
+dependencies for this release, as identified in the META.yml data contained
+in the index.
+
+Returns a reference to a HASH where the key is the name of a library as
+a string, and the value is the version for the dependency (or zero if the
+dependency is not for a specific version).
+
+=cut
+
+sub build_requires {
+	my $self = shift;
+
+	# Get the raw dependency hash
+	my $meta = $self->meta_data;
+	unless ( UNIVERSAL::isa($meta, 'HASH') ) {
+		# If it has no META.yml at all, we assume that it
+		# has no dependencies.
+		return ();
+	}
+	my $requires = $meta->{build_requires} or return {};
+	if ( UNIVERSAL::isa($requires, 'HASH') ) {
+		# To be safe (mainly in case it's a dependency object of
+		# some sort) make sure it's a plain hash before returning.
+		my %hash = %$requires;
+		return \%hash;
+	}
+
+	# It could be an array of Requires objects
+	if ( UNIVERSAL::isa($requires, 'ARRAY') ) {
+		my %hash = ();
+		foreach my $dep ( @$requires ) {
+			unless ( UNIVERSAL::isa($dep, 'Module::META::Requires') ) {
+				Carp::croak("Unknown dependency structure in META.yml for "
+					. $self->source);
+			}
+			$hash{ $dep->{name} } = $dep->{version};
+		}
+		return \%hash;
+	}
+
+	Carp::croak("Unknown 'build_requires' dependency structure in META.yml for "
 		. $self->source);
 }
 
@@ -587,6 +640,30 @@ sub requires_libraries {
 
 =pod
 
+=head2 build_requires_libraries
+
+The C<build_requires_libraries> method returns a list of the build-time
+C<JSAN::Index::Library> dependencies as identified by the META.yml file
+for the release.
+
+=cut
+
+sub build_requires_libraries {
+	my $self     = shift;
+	my $requires = $self->build_requires;
+
+	# Find the library object for each key
+	my @libraries = ();
+	foreach my $name ( sort keys %$requires ) {
+		my $library = JSAN::Index::Library->retrieve( name => $name );
+		push @libraries, $library if $library;
+	}
+
+	@libraries;
+}
+
+=pod
+
 =head2 requires_releases
 
 The C<requires_releases> method returns a list of the C<JSAN::Index::Release>
@@ -598,6 +675,25 @@ release.
 sub requires_releases {
 	my $self      = shift;
 	my @libraries =	$self->requires_libraries;
+
+	# Derive a list of releases
+	my @releases = map { $_->release } @libraries;
+	return @releases;
+}
+
+=pod
+
+=head2 build_requires_releases
+
+The C<requires_releases> method returns a list of the C<JSAN::Index::Release>
+build-time depedencies based on those specified in the META.yml file for the
+release.
+
+=cut
+
+sub build_requires_releases {
+	my $self      = shift;
+	my @libraries =	$self->build_requires_libraries;
 
 	# Derive a list of releases
 	my @releases = map { $_->release } @libraries;
@@ -818,7 +914,7 @@ use base 'Algorithm::Dependency::Ordered';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 }
 
 sub new {
@@ -826,20 +922,19 @@ sub new {
 	my %params = @_;
 
 	# Apply defaults
-	$params{type}   ||= 'install';
-	$params{source} ||= JSAN::Index::Release::_Source->new( $params{type} );
+	$params{source} ||= JSAN::Index::Release::_Source->new( %params );
 
 	# Hand off to superclass constructor
 	my $self = $class->SUPER::new( %params )
 		or Carp::croak("Failed to create JSAN::Index::Release::_Dependency object");
 
 	# Save the type for later
-	$self->{type} = $params{type};
+	$self->{build} = !! $params{build};
 
 	$self;
 }
 
-sub type { $_[0]->{type} }
+sub build { $_[0]->{build} }
 
 sub schedule {
 	my $self     = shift;
@@ -878,25 +973,21 @@ use base 'Algorithm::Dependency::Source';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.07';
+	$VERSION = '0.08';
 }
 
 sub new {
-	my $class = ref $_[0] ? ref shift : shift;
-
-	# Installation or testing source?
-	my $type  = shift || 'install';
-	unless ( $type eq 'install' or $type eq 'test' ) {
-		Carp::croak("Illegal JSAN::Index::Release::_Source constructor argument '$type'");
-	}
+	my $class  = ref $_[0] ? ref shift : shift;
+	my %params = @_;
 
 	# Create the basic object
 	my $self = $class->SUPER::new();
 
-	# Set the method to use
-	$self->{method} = $type eq 'install'
-		? 'requires_releases'
-		: 'build_requires_releases';
+	# Set the methods to use
+	$self->{requires_releases} = 1;
+	if ( $params{build} ) {
+		$self->{build_requires_releases} = 1;
+	}
 
 	$self;
 }
@@ -913,10 +1004,23 @@ sub _load_item_list {
 
 	# Wrap the releases in the Adapter objects
 	my @items  = ();
-	my $method = $self->{method};
 	foreach my $release ( @releases ) {
 		my $id      = $release->source;
-		my @depends = map { $_->source } $release->$method();
+
+		# Get the list of dependencies
+		my @depends = ();
+		if ( $self->{requires_releases} ) {
+			push @depends, $release->requires_releases;
+		}
+		if ( $self->{build_requires_releases} ) {
+			push @depends, $release->build_requires_releases;
+		}
+
+		# Convert to a distinct source list
+		my %seen = ();
+		@depends = grep { ! $seen{$_} } map { $_->source } @depends;
+
+		# Add the dependency
 		my $item = Algorithm::Dependency::Item->new( $id => @depends )
 			or die "Failed to create Algorithm::Dependency::Item";
 		push @items, $item;
