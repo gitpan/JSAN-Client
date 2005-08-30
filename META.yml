@@ -1,5 +1,5 @@
 name: JSAN-Client
-version: 0.08
+version: 0.10
 abstract: The JavaScript Archive Network Client Libraries
 author: Adam Kennedy <cpan@ali.as>
 license: perl
@@ -12,9 +12,12 @@ requires:
   File::Spec: 0.80
   File::Path: 1.06
   File::HomeDir: 0.06
+  Config::Tiny: 2.02
+  URI: 0
   HTML::Location: 0.07
   LWP::Simple: 1.41
   Class::DBI: 0.96
+  DBD::SQLite: 1.08
   Archive::Tar: 0
   Archive::Zip: 0
   YAML: 0.39

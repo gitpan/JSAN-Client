@@ -36,12 +36,13 @@ class, or even more preferably the L<jsan> installer application.
 =cut
 
 use strict;
+use Params::Util '_INSTANCE';
 use JSAN::Transport;
 use JSAN::Index;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.08';
+	$VERSION = '0.10';
 }
 
 
@@ -109,7 +110,7 @@ sub new {
 		Carp::croak("Prefix provided to JSAN::Client::new is not a writable directory");
 	}
 
-	$self;			
+	$self;
 }
 
 =pod
@@ -171,11 +172,14 @@ up to date and did not need to be installed, or dies on error.
 =cut
 
 sub install_library {
-	my $self   = shift;
+	my $self    = shift;
 
-	# Does the library exist?
-	my $library = JSAN::Index::Library->retrieve( name => $_[0] )
-		or Carp::croak("The JSAN library '$_[0]' does not exist");
+	# Take the library as an object or a name
+	my $library = shift;
+	unless ( _INSTANCE($library, 'JSAN::Index::Library') ) {
+		$library = JSAN::Index::Library->retrieve( name => $library )
+			or Carp::croak("The JSAN library '$library' does not exist");
+	}
 
 	$self->_install_release( $library->release, $_[0] );
 }
@@ -202,9 +206,12 @@ is already up to date and did not need to be installed, or dies on error.
 sub install_distribution {
 	my $self    = shift;
 
-	# Does the distribution exist?
-	my $distribution = JSAN::Index::Distribution->retrieve( name => $_[0] )
-		or Carp::croak("The JSAN distribution '$_[0]' does not exist");
+	# Take the distribution as an object or a name
+	my $distribution = shift;
+	unless ( _INSTANCE($distribution, 'JSAN::Index::Distribution') ) {
+		$distribution = JSAN::Index::Distribution->retrieve( name => $distribution )
+			or Carp::croak("The JSAN distribution '$distribution' does not exist");
+	}
 
 	$self->_install_release( $distribution->latest_release, $_[0] );
 }
@@ -214,6 +221,7 @@ sub _install_release {
 	my ($self, $requested, $name ) = @_;
 
 	# Find the full schedule
+	$self->_print("Scanning index for dependencies...");
 	my $dependency = JSAN::Index->dependency( build => $self->build );
 	my $schedule   = $dependency->schedule( $requested )
 		or Carp::croak("Error while finding dependencies for '$name'");
@@ -224,12 +232,20 @@ sub _install_release {
 
 	# Following debian's lead, download all the releases first.
 	# That way if there's a download error we won't be left half-installed.
+	my $total = scalar(@releases);
+	my $count = 0;
+	$self->_print("Fetching releases from JSAN...");
 	foreach my $release ( @releases ) {
+		$count++;
+		$self->_print("$count of $total: Mirroring release " . $release->source);
 		$release->mirror;
 	}
 
 	# Install each of the releases
+	$count = 0;
+	$self->_print("Installing release to '" . $self->prefix . "'");
 	foreach my $release ( @releases ) {
+		$self->_print("$count of $total: Extracting release " . $release->source);
 		$self->_extract_release( $release );
 	}
 
@@ -240,6 +256,25 @@ sub _install_release {
 sub _extract_release {
 	my ($self, $release) = @_;
 	$release->extract_libs( to => $self->prefix );
+}
+
+
+
+
+
+#####################################################################
+# Support Methods
+
+# Print to screen if in verbose mode
+sub _print {
+	my $self = shift;
+	return 1 unless $self->verbose;
+	while ( @_ ) {
+		my $line = shift;
+		chomp($line);
+		print STDOUT "$line\n";
+	}
+	1;
 }
 
 1;

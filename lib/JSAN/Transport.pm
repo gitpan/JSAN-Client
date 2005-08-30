@@ -45,9 +45,9 @@ use DBI                   ();
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.08';
+	$VERSION = '0.10';
 
-	# prefork support (for preloading environments)
+	# Optional prefork.pm support
 	eval "use prefork 'Class::DBI';";
 }
 

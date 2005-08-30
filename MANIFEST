@@ -13,7 +13,14 @@ inc/Module/Install/Win32.pm
 inc/Module/Install/WriteAll.pm
 lib/JSAN/Client.pm
 lib/JSAN/Index.pm
+lib/JSAN/Index/Author.pm
+lib/JSAN/Index/CDBI.pm
+lib/JSAN/Index/Distribution.pm
+lib/JSAN/Index/Extractable.pm
+lib/JSAN/Index/Library.pm
+lib/JSAN/Index/Release.pm
 lib/JSAN/Transport.pm
+lib/JSAN/URI.pm
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
@@ -26,4 +33,5 @@ t/04_index.t
 t/05_extract.t
 t/06_dependency.t
 t/07_client.t
+t/08_uri.t
 t/99_pod.t
