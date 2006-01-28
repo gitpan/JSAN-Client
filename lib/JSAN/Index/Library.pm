@@ -8,15 +8,15 @@ use base 'JSAN::Index::Extractable';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
 }
 
 JSAN::Index::Library->table('library');
 JSAN::Index::Library->columns( Essential =>
-	'name',         # Library namespace          - 'Display.Swap'
-	'release',      # Release containing library - '/dist/ADAMK/Display.Swap-0.01.tar.gz'
-	'version',      # Library version            - '0.01' or '~'
-	'doc',          # Doc path
+	'name',    # Library namespace          - 'Display.Swap'
+	'release', # Release containing library - '/dist/ADAMK/Display.Swap-0.01.tar.gz'
+	'version', # Library version            - '0.01' or '~'
+	'doc',     # Doc path
 	);
 JSAN::Index::Library->has_a(
 	release => 'JSAN::Index::Release',

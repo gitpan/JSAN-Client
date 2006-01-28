@@ -8,17 +8,17 @@ use base 'JSAN::Index::CDBI';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
 }
 
 JSAN::Index::Author->table('author');
 JSAN::Index::Author->columns( Essential =>
-	'login',    # AUTHOR login id        - 'adamk'
-	'name',     # Full Name              - 'Adam Kennedy'
-	            #                          'Han Kwai Teow'
-	'doc',      # openjsan.org doc path  - '/doc/a/au/adamk
-	'email',    # Public email address   - 'jsan@ali.as'
-	'url',      # Personal website       - 'http://ali.as/'
+	'login', # AUTHOR login id        - 'adamk'
+	'name',  # Full Name              - 'Adam Kennedy'
+	         #                          'Han Kwai Teow'
+	'doc',   # openjsan.org doc path  - '/doc/a/au/adamk
+	'email', # Public email address   - 'jsan@ali.as'
+	'url',   # Personal website       - 'http://ali.as/'
 	);
 JSAN::Index::Author->columns(
 	Primary => 'login',

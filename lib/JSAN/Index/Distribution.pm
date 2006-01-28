@@ -8,13 +8,13 @@ use base 'JSAN::Index::Extractable';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
 }
 
 JSAN::Index::Distribution->table('distribution');
 JSAN::Index::Distribution->columns( Essential =>
-	'name',    # Name in META.yml       - 'Display-Swap'
-	'doc',     # openjsan.org doc path  - '/doc/a/ad/adamk/Display/Swap'
+	'name', # Name in META.yml       - 'Display-Swap'
+	'doc',  # openjsan.org doc path  - '/doc/a/ad/adamk/Display/Swap'
 	);
 JSAN::Index::Distribution->columns(
 	Primary  => 'name',
@@ -24,10 +24,11 @@ JSAN::Index::Distribution->has_many(
 	);
 
 sub latest_release {
-	my $self = shift;
-	my @releases = $self->releases( { order_by => 'version desc' } )
+	my $self     = shift;
+	my @releases = $self->releases
 		or Carp::croak("No releases found for distribution "
 			. $self->name );
+	@releases = sort { $b->version <=> $a->version } @releases;
 	$releases[0];
 }
 

@@ -15,8 +15,9 @@ BEGIN {
 	}
 }
 
-use Test::More tests => 16;
+use Test::More tests => 17;
 
+use Scalar::Util ();
 use File::Remove ();
 use JSAN::Client;
 
@@ -34,6 +35,10 @@ my @requires = map { catfile(@$_) } (
 	[ 'Display',   'Swap.js' ],
 	[ 'JSAN.js'              ],
 	);
+
+ok( defined &Scalar::Util::blessed, 'Scalar::Util has blessed function' );
+
+
 
 
 

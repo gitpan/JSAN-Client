@@ -65,7 +65,7 @@ use strict;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
 }
 
 # Load the components
@@ -119,7 +119,7 @@ use base 'Algorithm::Dependency::Ordered';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
 }
 
 sub new {
@@ -173,7 +173,7 @@ use base 'Algorithm::Dependency::Source';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
 }
 
 sub new {
@@ -233,14 +233,6 @@ sub _load_item_list {
 
 =pod
 
-=head1 TO DO
-
-- Add the testing dependency algorithm variant
-
-- Add support for JSON META.yml files
-
-- Add verbose support
-
 =head1 SUPPORT
 
 Bugs should be reported via the CPAN bug tracker at
@@ -255,7 +247,7 @@ Adam Kennedy E<lt>cpan@ali.asE<gt>, L<http://ali.as/>
 
 =head1 COPYRIGHT
 
-Copyright 2005 Adam Kennedy. All rights reserved.
+Copyright 2005,2006 Adam Kennedy. All rights reserved.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

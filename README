@@ -1,5 +1,5 @@
 NAME
-    JSAN::Client - JavaScript Archive Network Client Object
+    JSAN::Client - The JavaScript Archive Network Client Library
 
 SYNOPSIS
       # Create the client object
@@ -7,12 +7,12 @@ SYNOPSIS
             prefix  => '/usr/local/js',
             verbose => 1,
             );
-
+  
       # Install by library name
-      $client->install_library( 'Display.Swap' );
+      $client->install_library('Display.Swap');
   
       # Install by distribution name
-      $client->install_distribution( 'DOM.Trigger' );
+      $client->install_distribution('DOM.Trigger');
 
 DESCRIPTION
     The "JSAN::Client" API intended to provide the highest-possible level
@@ -111,7 +111,7 @@ AUTHOR
     Adam Kennedy <cpan@ali.as>, <http://ali.as/>
 
 COPYRIGHT
-    Copyright 2005 Adam Kennedy. All rights reserved.
+    Copyright 2005, 2006 Adam Kennedy. All rights reserved.
 
     This program is free software; you can redistribute it and/or modify it
     under the same terms as Perl itself.

@@ -4,7 +4,7 @@ package JSAN::Client;
 
 =head1 NAME
 
-JSAN::Client - JavaScript Archive Network Client Object
+JSAN::Client - The JavaScript Archive Network Client Library
 
 =head1 SYNOPSIS
 
@@ -13,12 +13,12 @@ JSAN::Client - JavaScript Archive Network Client Object
   	prefix  => '/usr/local/js',
   	verbose => 1,
   	);
-
+  
   # Install by library name
-  $client->install_library( 'Display.Swap' );
+  $client->install_library('Display.Swap');
   
   # Install by distribution name
-  $client->install_distribution( 'DOM.Trigger' );
+  $client->install_distribution('DOM.Trigger');
 
 =head1 DESCRIPTION
 
@@ -35,14 +35,19 @@ class, or even more preferably the L<jsan> installer application.
 
 =cut
 
+use 5.005;
 use strict;
-use Params::Util '_INSTANCE';
 use JSAN::Transport;
 use JSAN::Index;
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.10';
+	$VERSION = '0.11';
+}
+
+# Bundled version of Params::Util::_INSTANCE
+sub _INSTANCE ($$) {
+	(Scalar::Util::blessed($_[0]) and $_[0]->isa($_[1])) ? $_[0] : undef;
 }
 
 
@@ -172,7 +177,7 @@ up to date and did not need to be installed, or dies on error.
 =cut
 
 sub install_library {
-	my $self    = shift;
+	my $self = shift;
 
 	# Take the library as an object or a name
 	my $library = shift;
@@ -204,7 +209,7 @@ is already up to date and did not need to be installed, or dies on error.
 =cut
 
 sub install_distribution {
-	my $self    = shift;
+	my $self = shift;
 
 	# Take the distribution as an object or a name
 	my $distribution = shift;
@@ -301,7 +306,7 @@ Adam Kennedy E<lt>cpan@ali.asE<gt>, L<http://ali.as/>
 
 =head1 COPYRIGHT
 
-Copyright 2005 Adam Kennedy. All rights reserved.
+Copyright 2005, 2006 Adam Kennedy. All rights reserved.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
