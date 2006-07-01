@@ -6,12 +6,13 @@ use strict;
 use File::Spec       ();
 use File::Spec::Unix ();
 use File::Path       ();
+use Params::Util     '_INSTANCE';
 use JSAN::Index      ();
 use base 'JSAN::Index::Extractable';
 
 use vars qw{$VERSION};
 BEGIN {
-	$VERSION = '0.11';
+	$VERSION = '0.12';
 
 	# Optional prefork.pm support
 	eval "use prefork 'YAML'";
@@ -71,7 +72,7 @@ sub requires {
 	if ( UNIVERSAL::isa($requires, 'ARRAY') ) {
 		my %hash = ();
 		foreach my $dep ( @$requires ) {
-			unless ( UNIVERSAL::isa($dep, 'Module::META::Requires') ) {
+			unless ( _INSTANCE($dep, 'Module::META::Requires') ) {
 				Carp::croak("Unknown dependency structure in META.yml for "
 					. $self->source);
 			}
@@ -106,7 +107,7 @@ sub build_requires {
 	if ( UNIVERSAL::isa($requires, 'ARRAY') ) {
 		my %hash = ();
 		foreach my $dep ( @$requires ) {
-			unless ( UNIVERSAL::isa($dep, 'Module::META::Requires') ) {
+			unless ( _INSTANCE($dep, 'Module::META::Requires') ) {
 				Carp::croak("Unknown dependency structure in META.yml for "
 					. $self->source);
 			}
