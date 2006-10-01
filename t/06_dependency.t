@@ -3,26 +3,24 @@
 # Basic test for JSAN::Index
 
 use strict;
-use lib ();
-use File::Spec::Functions ':ALL';
 BEGIN {
-	$| = 1;
-	unless ( $ENV{HARNESS_ACTIVE} ) {
-		require FindBin;
-		$FindBin::Bin = $FindBin::Bin; # Avoid a warning
-		chdir catdir( $FindBin::Bin, updir() );
-		lib->import(
-			catdir('blib', 'lib'),
-			catdir('blib', 'arch'),
-			'lib',
-			);
-	}
+	$|  = 1;
+	$^W = 1;
 }
 
-use Test::More tests => 8;
-
+use Test::More;
 use JSAN::Transport;
 use JSAN::Index;
+use LWP::Online 'online';
+
+if ( online() ) {
+	plan( tests => 8 );
+} else {
+	plan( skip_all => "Skipping online tests" );
+	exit(0);
+}
+
+
 
 
 

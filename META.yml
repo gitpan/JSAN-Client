@@ -1,32 +1,32 @@
-
+abstract: The JavaScript Archive Network Client Library
+author: Adam Kennedy <cpan@ali.as>, L<http://ali.as/>
+build_requires: 
+  File::Remove: 0.22
+  Test::More: 0.47
+distribution_type: module
+generated_by: Module::Install version 0.64
+license: perl
+name: JSAN-Client
 no_index: 
   directory: 
     - inc
     - t
-generated_by: Module::Install version 0.63
-distribution_type: module
-version: 0.13
-name: JSAN-Client
-author: Adam Kennedy <cpan@ali.as>, L<http://ali.as/>
-license: perl
-build_requires: 
-  File::Remove: 0.22
-  Test::More: 0.47
 requires: 
-  HTML::Location: 0.07
-  Scalar::Util: 1.11
-  YAML: 0.39
-  Archive::Zip: 0
-  DBD::SQLite: 1.08
-  File::Spec: 0.80
-  Params::Util: 0.14
-  File::Path: 1.06
-  Archive::Tar: 0
-  LWP::Simple: 1.41
-  URI: 0
-  File::HomeDir: 0.50
-  Class::DBI: 3.000011
-  perl: 5.005
   Algorithm::Dependency: 1.02
+  Archive::Tar: 0
+  Archive::Zip: 0
+  Class::DBI: 3.000011
   Config::Tiny: 2.02
-abstract: The JavaScript Archive Network Client Library
+  DBD::SQLite: 1.08
+  File::HomeDir: 0.50
+  File::Path: 1.06
+  File::Spec: 0.80
+  LWP::Online: 0.01
+  LWP::Simple: 1.41
+  Params::Util: 0.14
+  Scalar::Util: 1.11
+  URI: 0
+  URI::ToDisk: 0.07
+  YAML: 0.39
+  perl: 5.005
+version: 0.14

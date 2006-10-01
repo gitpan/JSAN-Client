@@ -30,4 +30,4 @@ t/05_extract.t
 t/06_dependency.t
 t/07_client.t
 t/08_uri.t
-t/99_pod.t
+t/99_author.t
