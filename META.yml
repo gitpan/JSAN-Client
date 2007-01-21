@@ -1,7 +1,7 @@
 abstract: The JavaScript Archive Network Client Library
-author: Adam Kennedy <cpan@ali.as>, L<http://ali.as/>
+author: Adam Kennedy <adamk@cpan.org>
 build_requires: 
-  File::Remove: 0.22
+  File::Remove: 0.34
   Test::More: 0.47
 distribution_type: module
 generated_by: Module::Install version 0.64
@@ -12,22 +12,22 @@ no_index:
     - inc
     - t
 requires: 
-  Algorithm::Dependency: 1.02
-  Archive::Tar: 0
-  Archive::Zip: 0
+  Algorithm::Dependency: 1.101
+  Archive::Tar: 1.30
+  Archive::Zip: 1.18
   Class::DBI: 3.000011
   Config::Tiny: 2.02
   DBD::SQLite: 1.08
   Digest::MD5: 2.33
-  File::HomeDir: 0.50
+  File::HomeDir: 0.63
   File::Path: 1.06
   File::Spec: 0.80
-  LWP::Online: 0.01
+  LWP::Online: 0.02
   LWP::Simple: 1.41
   Params::Util: 0.14
   Scalar::Util: 1.11
   URI: 0
-  URI::ToDisk: 0.07
+  URI::ToDisk: 1.08
   YAML: 0.39
   perl: 5.005
-version: 0.15
+version: 0.16
