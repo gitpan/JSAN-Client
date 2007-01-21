@@ -18,6 +18,7 @@ requires:
   Class::DBI: 3.000011
   Config::Tiny: 2.02
   DBD::SQLite: 1.08
+  Digest::MD5: 2.33
   File::HomeDir: 0.50
   File::Path: 1.06
   File::Spec: 0.80
@@ -29,4 +30,4 @@ requires:
   URI::ToDisk: 0.07
   YAML: 0.39
   perl: 5.005
-version: 0.14
+version: 0.15
