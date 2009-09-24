@@ -2,6 +2,7 @@ Changes
 inc/Module/Install.pm
 inc/Module/Install/Base.pm
 inc/Module/Install/Can.pm
+inc/Module/Install/DSL.pm
 inc/Module/Install/Fetch.pm
 inc/Module/Install/Makefile.pm
 inc/Module/Install/Metadata.pm
@@ -10,9 +11,7 @@ inc/Module/Install/WriteAll.pm
 lib/JSAN/Client.pm
 lib/JSAN/Index.pm
 lib/JSAN/Index/Author.pm
-lib/JSAN/Index/CDBI.pm
 lib/JSAN/Index/Distribution.pm
-lib/JSAN/Index/Extractable.pm
 lib/JSAN/Index/Library.pm
 lib/JSAN/Index/Release.pm
 lib/JSAN/Transport.pm
@@ -30,4 +29,6 @@ t/05_extract.t
 t/06_dependency.t
 t/07_client.t
 t/08_uri.t
-t/99_author.t
+t/97_meta.t
+t/98_pod.t
+t/99_pmv.t

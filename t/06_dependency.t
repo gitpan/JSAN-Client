@@ -1,26 +1,29 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 # Basic test for JSAN::Index
 
 use strict;
 BEGIN {
-	$|  = 1;
-	$^W = 1;
+    $|  = 1;
+    $^W = 1;
 }
 
 use Test::More;
-use JSAN::Transport;
-use JSAN::Index;
-use LWP::Online 'online';
+use File::Remove 'remove';
+use LWP::Online  'online';
+
+BEGIN { remove( \1, 'temp' ) if -e 'temp'; }
+END   { remove( \1, 'temp' ) if -e 'temp'; }
 
 if ( online() ) {
-	plan( tests => 8 );
+    plan( tests => 8 );
 } else {
-	plan( skip_all => "Skipping online tests" );
-	exit(0);
+    plan( skip_all => "Skipping online tests" );
+    exit(0);
 }
 
-
+use JSAN::Transport mirror_local => 'temp';
+use JSAN::Index;
 
 
 
@@ -31,9 +34,9 @@ if ( online() ) {
 
 # Can we load the release source?
 foreach my $params ( [], [ build => 1 ] ) {
-	my $Source = JSAN::Index::Release::_Source->new( @$params );
-	isa_ok( $Source, 'JSAN::Index::Release::_Source' );
-	ok( $Source->load, 'JSAN::Index::Release::_Source loads ok' );
+    my $Source = JSAN::Index::Release::_Source->new( @$params );
+    isa_ok( $Source, 'JSAN::Index::Release::_Source' );
+    ok( $Source->load, 'JSAN::Index::Release::_Source loads ok' );
 }
 
 # Get an installation Alg:Dep object

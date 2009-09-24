@@ -1,33 +1,44 @@
-abstract: The JavaScript Archive Network Client Library
-author: Adam Kennedy <adamk@cpan.org>
-build_requires: 
-  File::Remove: 0.34
+---
+abstract: 'JSAN Client 2.0 (migrated from Class::DBI to ORLite)'
+author:
+  - 'Adam Kennedy <adamk@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: 6.42
+  File::Remove: 1.40
   Test::More: 0.47
+configure_requires:
+  ExtUtils::MakeMaker: 6.42
 distribution_type: module
-generated_by: Module::Install version 0.64
+generated_by: 'Module::Install version 0.91'
 license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+module_name: JSAN::Client
 name: JSAN-Client
-no_index: 
-  directory: 
+no_index:
+  directory:
     - inc
     - t
-requires: 
-  Algorithm::Dependency: 1.101
+requires:
+  Algorithm::Dependency: 1.106
   Archive::Tar: 1.30
   Archive::Zip: 1.18
-  Class::DBI: 3.000011
-  Config::Tiny: 2.02
-  DBD::SQLite: 1.08
+  Config::Tiny: 2.12
   Digest::MD5: 2.33
-  File::HomeDir: 0.63
+  File::HomeDir: 0.69
   File::Path: 1.06
   File::Spec: 0.80
-  LWP::Online: 0.02
+  LWP::Online: 0.03
   LWP::Simple: 1.41
-  Params::Util: 0.14
+  ORLite::Mirror: 1.16
+  Params::Util: 1.00
   Scalar::Util: 1.11
-  URI: 0
   URI::ToDisk: 1.08
-  YAML: 0.39
-  perl: 5.005
-version: 0.16
+  YAML: 0.60
+  perl: 5.8.5
+resources:
+  ChangeLog: http://fisheye2.atlassian.com/changelog/cpan/trunk/JSAN-Client
+  license: http://dev.perl.org/licenses/
+  repository: http://svn.ali.as/cpan/trunk/JSAN-Client
+version: 0.20

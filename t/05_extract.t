@@ -1,28 +1,31 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 
 # Basic test for JSAN::Index
 
 use strict;
-use File::Spec::Functions ':ALL';
 BEGIN {
-	$|  = 1;
-	$^W = 1;
+    $|  = 1;
+    $^W = 1;
 }
 
 use Test::More tests => 5;
+use File::Spec::Functions ':ALL';
+use File::Remove 'remove';
+use LWP::Online  'online';
 
-use File::Remove ();
-use JSAN::Transport;
+BEGIN { remove( \1, 'temp' ) if -e 'temp'; }
+END   { remove( \1, 'temp' ) if -e 'temp'; }
+
+use JSAN::Transport mirror_local => 'temp';
 use JSAN::Index;
-use LWP::Online 'online';
 
 # Create and/or clear the test directory
 my $testdir = catdir( curdir(), '05_extract' );
-File::Remove::remove \1, $testdir if -e $testdir;
+remove \1, $testdir if -e $testdir;
 ok( ! -e $testdir, "Test directory '$testdir' does not exist" );
 ok( mkdir($testdir), "Create test directory '$testdir'" );
 END {
-	File::Remove::remove \1, $testdir if -e $testdir;
+    remove \1, $testdir if -e $testdir;
 }
 
 
@@ -33,17 +36,17 @@ END {
 # Extract a known release into the test directory
 
 SKIP: {
-	skip("Skipping online tests", 3) unless online();
+    skip("Skipping online tests", 3) unless online();
 
-	# Find a known library
-	my $swap = JSAN::Index::Library->retrieve( name => 'Display.Swap' );
-	isa_ok( $swap, 'JSAN::Index::Library' );
+    # Find a known library
+    my $swap = JSAN::Index::Library->retrieve( name => 'Display.Swap' );
+    isa_ok( $swap, 'JSAN::Index::Library' );
 
-	# Attempt to extract it to the testdir
-	ok( $swap->extract_libs( to => $testdir ),
-		'->extract_libs returns ok for Display.Swap' );
-	my $testfile = catfile( $testdir, 'Display', 'Swap.js' );
-	ok( -f $testfile, "->extract_libs created expected file '$testfile'" );
+    # Attempt to extract it to the testdir
+    ok( $swap->extract_libs( to => $testdir ),
+        '->extract_libs returns ok for Display.Swap' );
+    my $testfile = catfile( $testdir, 'Display', 'Swap.js' );
+    ok( -f $testfile, "->extract_libs created expected file '$testfile'" );
 }
 
 exit(0);
