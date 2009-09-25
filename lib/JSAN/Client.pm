@@ -49,15 +49,27 @@ use File::Path            1.06  ();
 use File::HomeDir         0.69  ();
 use LWP::Simple           1.41  ();
 use LWP::Online           0.03  ();
-use ORLite::Mirror        1.16  ();
+use ORLite::Mirror        1.17  ();
 use Params::Util          1.00  ();
 use Scalar::Util          1.11  ();
 use URI::ToDisk           1.08  ();
 
 use JSAN::Transport;
-use JSAN::Index;
+use JSAN::Index ();
 
-our $VERSION = '0.20';
+our $VERSION = '0.21';
+
+# Pass through any import params
+sub import {
+    my $class  = shift;
+    my $params = Params::Util::_HASH(shift) || {};
+
+    # Prevent double-initialisation
+    JSAN::Index->can('orlite') or
+    JSAN::Index->import( $params );
+
+    return 1;
+}
 
 
 
