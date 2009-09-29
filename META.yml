@@ -41,4 +41,4 @@ resources:
   ChangeLog: http://fisheye2.atlassian.com/changelog/cpan/trunk/JSAN-Client
   license: http://dev.perl.org/licenses/
   repository: http://svn.ali.as/cpan/trunk/JSAN-Client
-version: 0.21
+version: 0.22
