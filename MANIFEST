@@ -14,6 +14,8 @@ lib/JSAN/Index/Author.pm
 lib/JSAN/Index/Distribution.pm
 lib/JSAN/Index/Library.pm
 lib/JSAN/Index/Release.pm
+lib/JSAN/Index/Release/Dependency.pm
+lib/JSAN/Index/Release/Source.pm
 lib/JSAN/Transport.pm
 LICENSE
 Makefile.PL
@@ -22,11 +24,10 @@ META.yml
 README
 t/01_compile.t
 t/02_transport.t
-t/03_transport_use.t
-t/04_index.t
-t/05_extract.t
-t/06_dependency.t
-t/07_client.t
+t/03_index.t
+t/04_extract.t
+t/05_dependency.t
+t/06_client.t
 t/97_meta.t
 t/98_pod.t
 t/99_pmv.t

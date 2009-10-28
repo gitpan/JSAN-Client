@@ -18,8 +18,8 @@ DESCRIPTION
     The "JSAN::Client" API intended to provide the highest-possible level
     abstraction for the process of installing JSAN distributions.
 
-    However please not this class is still intended for developers, and
-    won't do things like auto-detect your "JSAN_PREFIX" and so on.
+    However this class is still intended for developers, and won't do things
+    like auto-detect your "JSAN_PREFIX" and so on.
 
     For more DWIM type functionality aimed at users, see the JSAN::Shell
     class, or even more preferably the jsan installer application.
@@ -59,7 +59,8 @@ METHODS
 
   verbose
     The "verbose" accessor returns the boolean flag indicating whether the
-    client is running in verbose mode.
+    client is running in verbose mode. If called with argument - modifies
+    the current 'verbose' value.
 
   build
     The "build" accessor returns the boolean flag indicating whether the
