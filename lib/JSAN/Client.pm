@@ -52,10 +52,10 @@ use LWP::Online           0.03  ();
 use Params::Util          1.00  ();
 use Scalar::Util          1.11  ();
 use URI::ToDisk           1.08  ();
-
+use DBI                   1.607 ();
 use JSAN::Index                 ();
 
-our $VERSION = '0.23';
+our $VERSION = '0.24';
 
 # Pass through any import params to JSAN::Index
 # if none params were provided - do nothing
