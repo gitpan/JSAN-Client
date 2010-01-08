@@ -25,6 +25,7 @@ requires:
   Archive::Tar: 1.30
   Archive::Zip: 1.18
   Config::Tiny: 2.12
+  DBD::SQLite: 1.25
   DBI: 1.607
   Digest::MD5: 2.33
   File::HomeDir: 0.69
@@ -41,4 +42,4 @@ resources:
   ChangeLog: http://fisheye2.atlassian.com/changelog/cpan/trunk/JSAN-Client
   license: http://dev.perl.org/licenses/
   repository: http://svn.ali.as/cpan/trunk/JSAN-Client
-version: 0.24
+version: 0.25

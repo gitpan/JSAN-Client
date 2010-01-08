@@ -53,9 +53,10 @@ use Params::Util          1.00  ();
 use Scalar::Util          1.11  ();
 use URI::ToDisk           1.08  ();
 use DBI                   1.607 ();
+use DBD::SQLite           1.25  ();
 use JSAN::Index                 ();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 # Pass through any import params to JSAN::Index
 # if none params were provided - do nothing
@@ -341,7 +342,7 @@ Adam Kennedy E<lt>adamk@cpan.orgE<gt>
 
 =head1 COPYRIGHT
 
-Copyright 2005 - 2009 Adam Kennedy.
+Copyright 2005 - 2010 Adam Kennedy.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

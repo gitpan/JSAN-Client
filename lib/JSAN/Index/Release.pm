@@ -13,7 +13,7 @@ use Params::Util              ();
 use JSAN::Index::Distribution ();
 use JSAN::Index::Author       ();
 
-our $VERSION = '0.24';
+our $VERSION = '0.25';
 
 BEGIN {
     # Optional prefork.pm support
@@ -751,7 +751,7 @@ See the documentation for L<JSAN::Index> for more information.
 
 =head1 COPYRIGHT
 
-Copyright 2009 Adam Kennedy.
+Copyright 2009 - 2010 Adam Kennedy.
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.
