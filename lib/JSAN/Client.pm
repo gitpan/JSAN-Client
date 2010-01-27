@@ -56,7 +56,7 @@ use DBI                   1.607 ();
 use DBD::SQLite           1.25  ();
 use JSAN::Index                 ();
 
-our $VERSION = '0.25';
+our $VERSION = '0.26';
 
 # Pass through any import params to JSAN::Index
 # if none params were provided - do nothing
@@ -286,6 +286,7 @@ sub _install_release {
     $count = 0;
     $self->_print("Installing release to '" . $self->prefix . "'");
     foreach my $release ( @releases ) {
+        $count++;
         $self->_print("$count of $total: Extracting release " . $release->source);
         $self->_extract_release( $release );
     }
@@ -297,6 +298,7 @@ sub _install_release {
 sub _extract_release {
     my ($self, $release) = @_;
     $release->extract_libs( to => $self->prefix );
+    $release->extract_static_files( to => $self->prefix );
 }
 
 
